@@ -1,2 +1,6 @@
 /node_modules/
-/config.json
+/config.js
+
+## Vim bckup and swap files
+.*.sw*
+*~
