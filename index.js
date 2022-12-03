@@ -5,8 +5,7 @@ import { configs } from './config.js';
 async function main() {
     for (let check of configs) {
         let Class = check['class'] || WebsiteCheckEngine ;
-        let checker = new Class();
-        await checker.ready(check);
+        let checker = await new Class(check).ready();
         schedule.scheduleJob(
             check["schedule"],
             function(){
