@@ -1,5 +1,5 @@
 import got from 'got';
-import Discord from "./clientpool.js";
+import Discord from "./client.js";
 
 export class WebsiteCheckEngine {
     website_url = null;
@@ -11,7 +11,7 @@ export class WebsiteCheckEngine {
 
     async ready(configobj) {
         this.website_url = configobj.website_url;
-        this.client = await Discord.getClient(configobj.bot_token);
+        this.client = await Discord.getClient();
         this.channel = await this.client.channels.fetch(configobj.status_channel_id);
         // If the channel is not found, then log an error and exit process
         if (!this.channel) {

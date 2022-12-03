@@ -1,5 +1,5 @@
 export var configs = [ {
-  "bot_token": "token_here",
+  // Bot token mode to the DISCORD_BOT_TOKEN environment var
   "website_url": "website_url",
   "status_channel_id": "status_channel_id",
   "schedule": "*/5 * * * *"
