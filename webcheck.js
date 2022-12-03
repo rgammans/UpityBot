@@ -48,7 +48,7 @@ export class WebsiteCheckEngine {
         if (check['ok']) {
             // If it is up, log it and update the channel title+
             console.log('Website is up');
-            await this.check_succedded(check);
+            await this.check_succeeded(check);
         } else {
             console.log('Website is down');
             await this.check_failed(check);
@@ -59,7 +59,7 @@ export class WebsiteCheckEngine {
         await this.discord_notify_down(check.response_code);
     }
 
-    async check_succedded(check) {
+    async check_succeeded(check) {
         await this.discord_notify_up(check.response_code);
     }
 
