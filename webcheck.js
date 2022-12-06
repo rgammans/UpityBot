@@ -43,8 +43,6 @@ export class WebsiteCheckEngine {
         // Get the channel that we want to edit from config.json
         //If we found it then run an up check
         const check = await this.do_check(this.config.website_url);
-
-        console.log(check);
         // If the check comes back the website is down
         if (check['ok']) {
             // If it is up, log it and update the channel title+
