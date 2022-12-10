@@ -30,15 +30,19 @@ export class DelayedActionChecker extends WebsiteCheckEngine {
         this.current_state = this.current_state - 1;
         switch (this.current_state) {
             case STATE_DOWN:
-                await this.discord_notify_down(" - just down, waiting to see it it fixes itself");
+                await this.discord_notify_down(
+                    `(${this.config.website_url}) - just down, waiting to see it it fixes itself`
+                );
                 break;
             case STATE_STILL_DOWN:
-                 let promise1 = this.discord_notify_down(" - still down after delay. Attempting autofix, this could take a few minutes - I wil get back to you.");
+                 let promise1 = this.discord_notify_down(
+                    `(${this.config.website_url}) - still down after delay. Attempting autofix, this could take a few minutes - I wil get back to you.`
+                 );
                  let promise2 = this.do_fix();
                  try {
                     await Promise.all([promise1, promise2]);
                 } catch (e) {
-                    await this.channel.send(`Attempt to fix failed - ${e}`);
+                    await this.channel.send(`(${this.config.website_url}) Attempt to fix failed - ${e}`);
                 }
                 break;
             case STATE_REALLY_DOWN:
@@ -54,7 +58,7 @@ export class DelayedActionChecker extends WebsiteCheckEngine {
             return;
         }
         this.current_state = STATE_UP;
-        await this.discord_notify_up(`Yay! We got ${check.response_code}`);
+        await this.discord_notify_up(`(${this.config.website_url}) Yay! We got ${check.response_code}`);
     }
 
     /** Override this aync function to code the fix action
