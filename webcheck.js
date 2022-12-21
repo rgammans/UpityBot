@@ -1,4 +1,5 @@
 import got from 'got';
+import {setTimeout} from 'timers/promises';
 import Discord from "./client.js";
 
 export class WebsiteCheckEngine {
@@ -42,7 +43,20 @@ export class WebsiteCheckEngine {
     async run_check(){
         // Get the channel that we want to edit from config.json
         //If we found it then run an up check
-        const check = await this.do_check(this.config.website_url);
+        var check = {'ok': false };
+        var count = 0;
+
+        // Pause a random about of time so every thing
+        // doesn't quite happen in step at the same moment
+        //  0 - 30 sec
+        await setTimeout(Math.random() * 30 * 1000)
+
+        while ((!check['ok']) && (count <= (this.config.down_count || 1) )) {
+            console.log("Checking then waiting..")
+            check = await this.do_check(this.config.website_url);
+            await setTimeout(this.config.down_delay || 1000)
+            count += 1;
+        }
         // If the check comes back the website is down
         if (check['ok']) {
             // If it is up, log it and update the channel title+
